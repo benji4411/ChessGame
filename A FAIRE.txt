@@ -1,4 +1,0 @@
-- Ajouter les timers
-- Afficher les coups joués
-- Améliorer l'ia avec une base d'ouverture et une evaluation plus précise des positions 
-- Ajouter la nulle 
