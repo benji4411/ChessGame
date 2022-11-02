@@ -1,9 +1,10 @@
 #include "Board.h"
 
 
-
+//Board class constructor
 Board::Board()
 {
+	//Create the black pieces
 	blackKing = new King(4, 0, false, this);
 	Queen* blackQueen = new Queen(3, 0, false, this);
 	Knight* blackKnight1= new Knight(1, 0, false, this);
@@ -21,6 +22,7 @@ Board::Board()
 	Pawn* blackPawn7 = new Pawn(6, 1, false, this);
 	Pawn* blackPawn8 = new Pawn(7, 1, false, this);
 
+	//Create the white pieces
 	whiteKing = new King(4, 7, true, this);
 	Queen* whiteQueen = new Queen(3, 7, true, this);
 	Knight* whiteKnight1 = new Knight(1, 7, true, this);
@@ -38,7 +40,7 @@ Board::Board()
 	Pawn* whitePawn7= new Pawn(6, 6, true, this);
 	Pawn* whitePawn8= new Pawn(7, 6, true, this);
 
-	
+	//Push all the black pieces into the pieces vector except the black king as it is unique and can be accessed more easily to check if it is attacked
 	pieces.push_back(blackQueen);
 	pieces.push_back(blackKnight1);
 	pieces.push_back(blackKnight2);
@@ -55,7 +57,7 @@ Board::Board()
 	pieces.push_back(blackPawn7);
 	pieces.push_back(blackPawn8);
 
-	
+	//Push all the white pieces into the pieces vector except the white king as it is unique and can be accessed more easily to check if it is attacked
 	pieces.push_back(whiteQueen);;
 	pieces.push_back(whiteKnight1);
 	pieces.push_back(whiteKnight2);
@@ -73,6 +75,7 @@ Board::Board()
 	pieces.push_back(whitePawn8);
 }
 
+//Copy Constructor useful for the AI which will test all moves on another board
 Board::Board(const Board& b)
 {
 	int x = 0;
@@ -92,6 +95,7 @@ Board::Board(const Board& b)
 	
 }
 
+//Destructor to delete pointers to pieces
 Board::~Board()
 {
 	for (Piece* p : pieces) {
@@ -101,6 +105,7 @@ Board::~Board()
 	delete(whiteKing);
 }
 
+//Draw the cells
 void Board::DrawBoard(Graphics& gfx)
 {
 	
@@ -110,6 +115,7 @@ void Board::DrawBoard(Graphics& gfx)
 		
 }
 
+//Draw the numbers to indicate the position
 void Board::DrawGrid(Graphics& gfx) {
 
 	int i = 0;
@@ -122,6 +128,7 @@ void Board::DrawGrid(Graphics& gfx) {
 
 }
 
+//Draw the pieces
 void Board::DrawPieces(Graphics& gfx)
 {
 	for (auto (&p) : pieces)
@@ -130,6 +137,7 @@ void Board::DrawPieces(Graphics& gfx)
 	blackKing->DrawPiece(gfx);
 }
 
+//Draw a dot to indicate the legal moves
 void Board::DrawDot(int x, int y, Graphics& gfx)
 {
 
@@ -148,6 +156,7 @@ void Board::DrawDot(int x, int y, Graphics& gfx)
 	gfx.DrawCircle((float)((x + 0.5) * Graphics::ScreenWidth / width), (float)((y + 0.5) * Graphics::ScreenHeight / height), 20, 0, rightColor);
 }
 
+//Draw a circle to indicate pieces that can be capture
 void Board::DrawDotAround(int x, int y, Graphics& gfx)
 {
 
@@ -166,6 +175,7 @@ void Board::DrawDotAround(int x, int y, Graphics& gfx)
 	gfx.DrawCircle((float)((x + 0.5) * Graphics::ScreenWidth / width),(float)((y + 0.5) * Graphics::ScreenHeight / height), 50, 40, rightColor);
 }
 
+//Highlight cases to indicate last move
 void Board::HighlightCase(int x, int y, Graphics& gfx)
 {
 	const Color highLightOnBeige = { 246,246,105 };
@@ -175,6 +185,7 @@ void Board::HighlightCase(int x, int y, Graphics& gfx)
 			gfx.PutPixel(x * Graphics::ScreenWidth / width + i, y * Graphics::ScreenHeight / height + j, (x + y) % 2 == 0 ? highLightOnBeige : highLightOnGreen);
 }
 
+//Move a piece to a (x,y) position, capture a piece if necessary and promote if pawn on the last row
 void Board::Move(Piece* piece, int x, int y)
 {
 	if (x < 0 || x > 7 || y < 0 || y > 7)
@@ -226,6 +237,7 @@ void Board::Move(Piece* piece, int x, int y)
 
 }
 
+//Undo the last move, useful for the AI to test moves
 bool Board::UndoMove()
 {
 	if (!moves.empty()) {
@@ -280,6 +292,7 @@ bool Board::UndoMove()
 		return false;
 }
 
+//Check if stalemate
 bool Board::StillLegalMove(bool color)
 {
 	for (auto (&p) : pieces)
@@ -292,6 +305,7 @@ bool Board::StillLegalMove(bool color)
 	return false;
 }
 
+//Get a piece at a position (x,y)
 Piece* Board::GetPieceAtPos(int _x, int _y)
 {
 	Piece* result = nullptr;
@@ -305,6 +319,7 @@ Piece* Board::GetPieceAtPos(int _x, int _y)
 	return result;
 }
 
+//Get the disabled piece at a position (x,y) (disabled = captured piece or pawn promoted) 
 Piece* Board::GetDisabledPieceAtPos(int _x, int _y)
 {
 	Piece* result = nullptr;
@@ -314,6 +329,7 @@ Piece* Board::GetDisabledPieceAtPos(int _x, int _y)
 	return result;
 }
 
+//Delete a piece, useful to delete a queen when undo promotion
 void Board::DeletePiece(Piece* p)
 {
 	auto it = pieces.begin();
@@ -327,6 +343,7 @@ void Board::DeletePiece(Piece* p)
 
 }
 
+//Check if the king is attacked
 bool Board::isKingInCheck(bool _color)
 {
 	int x = 0;
@@ -349,6 +366,7 @@ bool Board::isKingInCheck(bool _color)
 	return false;
 }
 
+//Check if a cell is attacked
 bool Board::isCellAttackedBy(int _x, int _y, bool _color)
 {
 	for (auto (&p) : pieces)
@@ -361,6 +379,7 @@ bool Board::isCellAttackedBy(int _x, int _y, bool _color)
 	return false;
 }
 
+//Check if the game is ended by mate or stalemate
 bool Board::GameIsOver() {
 	if ((isKingInCheck(true) && !StillLegalMove(true)) || (isKingInCheck(false) && !StillLegalMove(false)))
 		return true;
@@ -368,6 +387,7 @@ bool Board::GameIsOver() {
 		return false;
 }
 
+//return the evaluation of a position for white
 float Board::whiteScore()
 {
 	float result = 0;
@@ -390,6 +410,7 @@ float Board::whiteScore()
 	return result;
 }
 
+//return the evaluation of a position for black
 float Board::blackScore()
 {
 	float result = 0;
@@ -412,6 +433,7 @@ float Board::blackScore()
 	return result;
 }
 
+//return all the possible moves for a position
 std::vector<PossibleMoves> Board::AllPossibleMove(bool _color)
 {
 	std::vector<PossibleMoves> result;
@@ -438,7 +460,7 @@ std::vector<PossibleMoves> Board::AllPossibleMove(bool _color)
 }
 
 
-
+//Draw a cell
 void Board::DrawCase(int x, int y, Color c, Graphics& gfx)
 {
 	for (int i = 0; i < Graphics::ScreenWidth / width; i++)
@@ -447,6 +469,7 @@ void Board::DrawCase(int x, int y, Color c, Graphics& gfx)
 
 }
 
+//Draw a number
 void Board::DrawNumber(int number, int x, int y, Color c, Graphics& gfx)
 {
 	const bool _1[5][4] = { 0,1,1,0,
@@ -555,6 +578,7 @@ void Board::DrawNumber(int number, int x, int y, Color c, Graphics& gfx)
 	}
 }
 
+//Draw a letter
 void Board::DrawAlpha(char alpha,int x, int y, Color c, Graphics& gfx)
 {
 	const bool A[5][4] = {  0,1,1,0,
