@@ -44,31 +44,31 @@ struct Move {
 class Board
 {
 public:
-	Board();
-	Board(const Board& b);
-	~Board();
-	void DrawBoard(Graphics& gfx);
-	void DrawGrid(Graphics& gfx);
-	void DrawPieces(Graphics& gfx);
-	void DrawDot(int x, int y, Graphics& gfx);
-	void DrawDotAround(int x, int y, Graphics& gfx);
-	void HighlightCase(int x, int y, Graphics& gfx);
-	void Move(Piece* piece, int x, int y);
-	bool UndoMove();
-	bool StillLegalMove(bool color);
-	Piece* GetPieceAtPos(int _x, int _y);
-	Piece* GetDisabledPieceAtPos(int _x, int _y);
-	void DeletePiece(Piece* p);
-	bool isKingInCheck(bool _color);
-	bool isCellAttackedBy(int _x, int _y, bool _color);
-	float whiteScore();
-	float blackScore();
-	bool GameIsOver();
-	std::vector<PossibleMoves> AllPossibleMove(bool _color);
+	Board();//Board class constructor
+	Board(const Board& b);//Copy Constructor useful for the AI which will test all moves on another board
+	~Board();//Destructor to delete pointers to pieces
+	void DrawBoard(Graphics& gfx);//Draw the cells
+	void DrawGrid(Graphics& gfx);//Draw the numbers and letters to indicate the position
+	void DrawPieces(Graphics& gfx);//Draw the pieces
+	void DrawDot(int x, int y, Graphics& gfx);//Draw a dot to indicate the legal moves
+	void DrawDotAround(int x, int y, Graphics& gfx);//Draw a circle to indicate pieces that can be capture
+	void HighlightCase(int x, int y, Graphics& gfx);//Highlight cases to indicate last move
+	void Move(Piece* piece, int x, int y);//Move a piece to a (x,y) position, capture a piece if necessary and promote if pawn on the last row
+	bool UndoMove();//Undo the last move, useful for the AI to test moves
+	bool StillLegalMove(bool color);//Check if stalemate
+	Piece* GetPieceAtPos(int _x, int _y);//Get a piece at a position (x,y)
+	Piece* GetDisabledPieceAtPos(int _x, int _y);//Get the disabled piece at a position (x,y) (disabled = captured piece or pawn promoted) 
+	void DeletePiece(Piece* p);//Delete a piece, useful to delete a queen when undo promotion
+	bool isKingInCheck(bool _color);//Check if the king is attacked
+	bool isCellAttackedBy(int _x, int _y, bool _color);//Check if a cell is attacked
+	float whiteScore();//return the evaluation of a position for white
+	float blackScore();//return the evaluation of a position for black
+	bool GameIsOver();//Check if the game is ended by mate or stalemate
+	std::vector<PossibleMoves> AllPossibleMove(bool _color);//return all the possible moves for a position
 private:
-	void DrawCase(int x, int y, Color c, Graphics& gfx);
-	void DrawNumber(int number, int x, int y, Color c, Graphics& gfx);
-	void DrawAlpha(char alpha, int x, int y, Color c, Graphics& gfx);
+	void DrawCase(int x, int y, Color c, Graphics& gfx);//Draw a cell
+	void DrawNumber(int number, int x, int y, Color c, Graphics& gfx);//Draw a number
+	void DrawAlpha(char alpha, int x, int y, Color c, Graphics& gfx);//Draw a letter
 
 public:
 	int static const width = 8;
