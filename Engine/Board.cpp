@@ -381,7 +381,7 @@ bool Board::isCellAttackedBy(int _x, int _y, bool _color)
 
 //Check if the game is ended by mate or stalemate
 bool Board::GameIsOver() {
-	if ((isKingInCheck(true) && !StillLegalMove(true)) || (isKingInCheck(false) && !StillLegalMove(false)))
+	if (!StillLegalMove(true) || !StillLegalMove(false))
 		return true;
 	else
 		return false;
