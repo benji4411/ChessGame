@@ -37,7 +37,7 @@ bool Piece::GetColor() {
 	return color;
 }
 
-
+//Check if his king will be attacked after one of his piece move to (xChecked,yChecked)
 bool Piece::willKingBeInCheck(int xChecked, int yChecked)
 {
 	int xTemp = this->x;
