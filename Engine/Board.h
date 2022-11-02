@@ -8,6 +8,7 @@
 #include <utility>
 #include "PieceSquareTables.h";
 
+//A struct to store all the possible moves of a piece
 struct PossibleMoves {
 	Piece* piece;
 	std::vector<std::pair<int, int>> moves;
@@ -17,6 +18,7 @@ struct PossibleMoves {
 	}
 };
 
+//A struct to store the information of a move played, useful to undo move
 struct MoveData {
 	Piece* pieceMoved;
 	Piece* pieceDisabled;
@@ -28,6 +30,7 @@ struct MoveData {
 	}
 };
 
+//A struct to store th information of a move to be played, useful to get the best move result of the AI
 struct Move {
 	Piece* piece = nullptr;
 	std::pair<int, int> move;
