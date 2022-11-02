@@ -44,6 +44,10 @@ bool Piece::willKingBeInCheck(int xChecked, int yChecked)
 	int yTemp = this->y;
 
 	Piece* p = board->GetPieceAtPos(xChecked, yChecked);
+	//if en passant
+	if (this->GetType() == PAWN && abs(xChecked - this->x) == 1 && p == nullptr) {
+		p = board->GetPieceAtPos(xChecked, yChecked - (color ? -1 : 1));
+	}
 	if(p != nullptr)
 		p->disabled = true;
 
