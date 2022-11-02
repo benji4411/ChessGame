@@ -115,7 +115,7 @@ void Board::DrawBoard(Graphics& gfx)
 		
 }
 
-//Draw the numbers to indicate the position
+//Draw the numbers and letters to indicate the position
 void Board::DrawGrid(Graphics& gfx) {
 
 	int i = 0;
