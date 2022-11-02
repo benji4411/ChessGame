@@ -2,7 +2,7 @@
 A simple chess game in C++ with a chess engine using the minimax algorithm.
 
 
-Furthermore ...
+Game engine 
 -
 
 This is one of my first personnal project, I made it starting from the Chili DirectX Framework from the Beginner C++ Game Programming Tutorial 0
