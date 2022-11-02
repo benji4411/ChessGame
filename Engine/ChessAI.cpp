@@ -1,6 +1,6 @@
 #include "ChessAI.h"
 
-
+//Minimax algorithm with alpha-beta pruning
 std::pair<Move*, float> ChessAI::minimax(Board& board, int depth,float alpha, float beta, bool maximizingPlayer, bool maximizingColor)
 {
     if(depth == 0 || board.GameIsOver())
@@ -47,7 +47,7 @@ std::pair<Move*, float> ChessAI::minimax(Board& board, int depth,float alpha, fl
     }
 }
 
-
+//Return the evaluation of a position
 float ChessAI::evaluate(Board& board, bool maximizingColor)
 {
     if (maximizingColor)
