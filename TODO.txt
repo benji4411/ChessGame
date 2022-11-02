@@ -2,3 +2,4 @@
 - Display the moves played
 - Improve the AI with an opening base and more accurate position evaluation
 - Add draw
+- Promote to knight
