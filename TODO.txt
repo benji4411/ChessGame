@@ -1,5 +1,5 @@
 - Add timers
 - Display the moves played
 - Improve the AI with an opening base and more accurate position evaluation
-- Add draw
+- Add draw by repetition 
 - Promote to knight
