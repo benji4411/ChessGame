@@ -1,5 +1,5 @@
 # ChessGame
-A simple chess game in C++ with a chess engine using the minimax algorithm.
+A chess game in C++ with a chess engine using the minimax algorithm.
 
 
 Game engine 
